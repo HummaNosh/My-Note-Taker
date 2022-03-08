@@ -6,7 +6,7 @@ const htmlroutes = require("./htmlroutes");
 const uuid = require('../helpers/uuid')
 
 
-main.get('/api/notes', (req, res)  =>
+main.get('/notes', (req, res)  =>
     readFromFile("./db/db.json" ).then((data) => res.json(JSON.parse(data)))
 );
 
