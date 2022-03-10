@@ -8,7 +8,7 @@ const fs = require('fs');
 const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
 
 main.get('/notes', (req, res)  =>
-    readFromFile("./develop/db/db.json" ).then((data) => res.json(JSON.parse(data)))
+    readFromFile("./db/db.json" ).then((data) => res.json(JSON.parse(data)))
 );
 
 main.post('/notes', (req, res) => {

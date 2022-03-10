@@ -1,7 +1,7 @@
 // Boring stuff
 const express = require('express');
 const fs = require('fs');
-const db = require("./Develop/db/db.json")
+const db = require("./db/db.json")
 const htmlroutes = require("./routes/htmlroutes")
 const apiroutes = require("./routes/api");
 const path = require('path');
