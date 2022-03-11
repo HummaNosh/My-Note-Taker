@@ -10,11 +10,13 @@ const { append } = require('express/lib/response');
 const db = require("../db/db.json");
 const { debug } = require('console');
 
-main.get('/notes', (req, res)  =>
+main.get('/api/notes', (req, res)  =>
     readFromFile("./db/db.json" ).then((data) => res.json(JSON.parse(data)))
 );
 
-main.post('/notes', (req, res) => {
+// NOT POSTING...
+
+main.post('/api/notes', (req, res) => {
 console.log(req.body);
     const { noteTitle, noteText, id } = req.body;
 
@@ -39,5 +41,15 @@ console.log(req.body);
     }
   });
   
+  main.delete("/api/notes/:id", (req, res) => {
+      const deleted = req.params.id;
+      if (deleted === note.id){
+          return false; 
+
+      } else {
+          return true;
+      }
+
+  });
 
 module.exports = main;
