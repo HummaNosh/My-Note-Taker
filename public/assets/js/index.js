@@ -35,11 +35,13 @@ const getNotes = () =>
 
 const saveNote = (note) =>
   fetch('/api/notes', {
+    
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(note),
+    
   });
 
 const deleteNote = (id) =>
@@ -72,6 +74,7 @@ const handleNoteSave = () => {
     text: noteText.value,
   };
   saveNote(newNote).then(() => {
+    console.log("button clicked")
     getAndRenderNotes();
     renderActiveNote();
   });
@@ -109,9 +112,11 @@ const handleNewNoteView = (e) => {
 };
 
 const handleRenderSaveBtn = () => {
+  
   if (!noteTitle.value.trim() || !noteText.value.trim()) {
     hide(saveNoteBtn);
   } else {
+    
     show(saveNoteBtn);
   }
 };
@@ -174,10 +179,12 @@ const renderNoteList = async (notes) => {
 const getAndRenderNotes = () => getNotes().then(renderNoteList);
 
 if (window.location.pathname === '/notes') {
-  saveNoteBtn.addEventListener('click', handleNoteSave);
+  
+  saveNoteBtn.addEventListener('click',handleNoteSave);
   newNoteBtn.addEventListener('click', handleNewNoteView)
   noteTitle.addEventListener('keyup', handleRenderSaveBtn);
   noteText.addEventListener('keyup', handleRenderSaveBtn);
 }
 
 getAndRenderNotes();
+
