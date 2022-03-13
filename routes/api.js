@@ -12,34 +12,26 @@ main.get('/notes', (req, res)  =>
     readFromFile("db/db.json" ).then((data) => res.json(JSON.parse(data)))
 );
 
-// NOT POSTING...find out why button is not saving.......
 
 main.post('/notes', (req, res) => {
 
-  const NewNote = JSON.parse(fs.readFileSync, newFeedback, ("db/db.json"));
-    const { noteTitle, noteText, id } = req.body;
+  const NewNote = JSON.parse(fs.readFileSync("db/db.json"));
+    const Note = req.body;
+    Note.id = uuid();
+    NewNote.push(Note);
+    fs.writeFileSync("db/db.json", JSON.stringify(NewNote));
+    res.json(NewNote);
 
-    if (noteTitle && noteText && id) {
-
-      const newFeedback = {
-        noteTitle,
-        noteText,
-        id: uuid,
-      };
-      res.json(NewNote);
-   
-  };
+  });
 
   
-  // main.deleteNote("/api/notes/:id", (req, res) => {
-  //     const deleted = req.params.id;
-  //     if (deleted === note.id){
-  //         return false; 
-
-  //     } else {
-  //         return true;
-  //     }
-
-  // });
+  main.delete("/notes/:id", (req, res) => {
+    const NewNote = JSON.parse(fs.readFileSync("db/db.json"));
+    const deletedOne = NewNote.filter (
+      (removeNote) => removeNote.id !== req.params.id
+    );
+  fs.writeFileSync("db/db.json", JSON.stringify(deletedOne));
+  res.json(deletedOne);
+  });
 
 module.exports = main;
