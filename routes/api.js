@@ -1,7 +1,5 @@
 const main = require('express').Router();
 const path = require('path');
-const { Router } = require('express');
-const { fstat } = require('fs');
 const htmlroutes = require("./htmlroutes");
 const uuid = require('../helpers/uuid')
 const fs = require('fs');
@@ -11,13 +9,14 @@ const db = require("../db/db.json");
 const { debug } = require('console');
 
 main.get('/notes', (req, res)  =>
-    readFromFile("./db/db.json" ).then((data) => res.json(JSON.parse(data)))
+    readFromFile("db/db.json" ).then((data) => res.json(JSON.parse(data)))
 );
 
 // NOT POSTING...find out why button is not saving.......
 
 main.post('/notes', (req, res) => {
-console.log(req.body);
+
+  const NewNote = JSON.parse(fs.readFileSync, newFeedback, ("db/db.json"));
     const { noteTitle, noteText, id } = req.body;
 
     if (noteTitle && noteText && id) {
@@ -27,29 +26,20 @@ console.log(req.body);
         noteText,
         id: uuid,
       };
-  
-      readAndAppend(newFeedback, '../db/db.json');
-  
-      const response = {
-        status: 'success',
-        body: newFeedback,
-      };
-  
-      res.json(response);
-    } else {
-      res.json('Error in posting feedback');
-    }
-  });
-  
-  main.deleteNote("/api/notes/:id", (req, res) => {
-      const deleted = req.params.id;
-      if (deleted === note.id){
-          return false; 
+      res.json(NewNote);
+   
+  };
 
-      } else {
-          return true;
-      }
+  
+  // main.deleteNote("/api/notes/:id", (req, res) => {
+  //     const deleted = req.params.id;
+  //     if (deleted === note.id){
+  //         return false; 
 
-  });
+  //     } else {
+  //         return true;
+  //     }
+
+  // });
 
 module.exports = main;
